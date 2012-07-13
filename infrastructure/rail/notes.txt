@@ -1,0 +1,5 @@
+Rail and rail ballast components are shared among all normal climates.
+
+The master copy is in rail_temperate.blend
+
+Toyland has unique rail and rail ballast components.

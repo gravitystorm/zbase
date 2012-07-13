@@ -1,0 +1,3 @@
+Monorail and monorail ballast components are shared among all climates.
+
+The master copy is in monorail_temperate.blend

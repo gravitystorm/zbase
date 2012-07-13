@@ -1,0 +1,3 @@
+Maglev and maglev ballast (trough) components are shared among all climates.
+
+The master copy is in maglev_temperate.blend
