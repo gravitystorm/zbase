@@ -1,0 +1,3 @@
+syntax: glob
+*.blend1
+*.blend2
