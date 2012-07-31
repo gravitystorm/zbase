@@ -3,146 +3,124 @@
 //ImageJ version 1.44 is known to work correctly.
 
 //Key resource arrays
-//Tile widths to expect for renders
-var tilew=newArray(64, 128, 256);
 //Arrays for LUT/palette
-var r=newArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 35, 47, 63, 75, 91, 111, 131, 159, 183, 211, 239, 51, 63, 79, 91, 107, 119, 135, 151, 167, 187, 203, 223, 67, 87, 111, 127, 143, 159, 179, 191, 203, 219, 231, 247, 71, 95, 119, 143, 167, 191, 215, 243, 255, 255, 255, 255, 35, 79, 95, 111, 127, 143, 163, 179, 199, 215, 235, 255, 27, 35, 47, 59, 71, 87, 99, 115, 131, 147, 163, 183, 31, 47, 59, 75, 91, 111, 135, 159, 183, 195, 207, 223, 15, 19, 23, 31, 39, 55, 71, 91, 111, 139, 163, 195, 79, 99, 119, 139, 167, 187, 207, 215, 227, 239, 247, 255, 15, 39, 51, 63, 83, 99, 119, 139, 159, 183, 211, 239, 0, 0, 7, 15, 27, 43, 67, 91, 119, 143, 175, 215, 11, 15, 23, 35, 47, 59, 79, 99, 123, 147, 175, 207, 63, 75, 83, 95, 107, 123, 135, 155, 171, 191, 215, 243, 63, 87, 115, 143, 171, 199, 227, 255, 255, 255, 255, 255, 79, 111, 147, 183, 219, 255, 255, 255, 255, 255, 255, 255, 0, 0, 0, 0, 7, 23, 43, 71, 99, 131, 171, 207, 63, 91, 119, 147, 179, 199, 219, 239, 243, 247, 251, 255, 39, 55, 71, 91, 107, 123, 143, 163, 187, 207, 231, 255, 255, 255, 255, 255, 7, 7, 7, 27, 39, 55, 55, 55, 115, 155, 47, 87, 47, 0, 27, 39, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-var g=newArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 51, 67, 83, 99, 115, 131, 151, 175, 195, 219, 243, 47, 59, 75, 91, 107, 123, 139, 155, 175, 191, 207, 227, 43, 59, 75, 87, 99, 115, 131, 151, 175, 199, 219, 239, 27, 43, 63, 83, 111, 139, 167, 203, 231, 243, 251, 255, 0, 0, 7, 15, 27, 39, 59, 79, 103, 127, 159, 191, 51, 63, 79, 95, 111, 127, 143, 155, 171, 187, 203, 219, 55, 71, 83, 99, 111, 135, 159, 183, 207, 219, 231, 247, 63, 83, 103, 123, 143, 159, 175, 191, 207, 223, 239, 255, 43, 55, 71, 87, 99, 115, 131, 151, 171, 191, 207, 227, 19, 43, 55, 67, 83, 99, 119, 139, 159, 183, 211, 239, 27, 39, 51, 67, 83, 103, 135, 163, 187, 211, 231, 247, 43, 55, 71, 83, 99, 115, 135, 155, 175, 199, 219, 243, 0, 7, 15, 31, 43, 63, 83, 103, 127, 155, 195, 235, 0, 0, 0, 0, 0, 0, 7, 7, 79, 123, 171, 219, 39, 51, 63, 71, 79, 83, 111, 139, 163, 183, 203, 219, 51, 63, 75, 87, 107, 127, 147, 167, 187, 207, 231, 255, 0, 0, 0, 7, 11, 31, 59, 91, 119, 151, 183, 215, 19, 31, 47, 63, 83, 103, 127, 147, 171, 195, 219, 243, 0, 183, 219, 255, 107, 107, 107, 131, 143, 155, 155, 155, 203, 227, 47, 71, 47, 0, 43, 59, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-var b=newArray(255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 51, 67, 83, 99, 115, 131, 151, 175, 195, 219, 243, 0, 0, 11, 19, 31, 47, 59, 79, 95, 115, 139, 163, 7, 11, 23, 31, 39, 51, 67, 87, 111, 135, 163, 195, 0, 0, 0, 7, 7, 15, 19, 27, 47, 95, 143, 195, 0, 0, 7, 15, 27, 39, 59, 79, 103, 127, 159, 191, 19, 23, 31, 39, 43, 51, 59, 67, 75, 83, 95, 103, 27, 35, 43, 55, 67, 79, 95, 111, 127, 147, 167, 191, 0, 0, 0, 0, 7, 23, 39, 63, 87, 115, 143, 179, 19, 27, 43, 59, 67, 83, 99, 115, 131, 151, 171, 195, 55, 87, 103, 119, 139, 155, 175, 191, 207, 223, 239, 255, 111, 151, 167, 187, 203, 223, 227, 231, 239, 243, 251, 255, 15, 23, 31, 43, 59, 75, 95, 119, 139, 167, 195, 223, 95, 115, 127, 143, 155, 171, 187, 199, 215, 231, 243, 255, 0, 0, 0, 0, 0, 0, 0, 0, 67, 115, 163, 215, 0, 0, 0, 0, 0, 0, 23, 51, 79, 107, 135, 163, 47, 55, 67, 79, 99, 119, 143, 163, 187, 207, 231, 255, 27, 39, 59, 75, 99, 119, 143, 171, 187, 203, 223, 239, 0, 7, 15, 31, 51, 75, 107, 127, 147, 171, 195, 223, 255, 0, 0, 0, 99, 99, 99, 123, 135, 151, 151, 151, 203, 227, 47, 47, 47, 99, 139, 151, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-//Length of string for tile index number
-var indexleng=5;
+var r=newArray(0, 238, 239, 240, 241, 242, 243, 244, 245, 246, 168, 184, 200, 216, 232, 252, 52, 68, 88, 108, 132, 156, 176, 204, 48, 64, 80, 96, 120, 148, 176, 204, 100, 116, 104, 124, 152, 184, 212, 244, 132, 88, 112, 136, 160, 188, 204, 220, 236, 252, 252, 252, 252, 76, 96, 116, 136, 156, 176, 196, 68, 96, 128, 156, 184, 212, 232, 252, 252, 252, 32, 64, 84, 108, 128, 148, 168, 184, 196, 212, 8, 16, 32, 48, 64, 84, 104, 128, 64, 44, 60, 80, 104, 128, 152, 180, 16, 32, 56, 76, 96, 120, 152, 184, 32, 56, 80, 88, 104, 124, 140, 160, 76, 96, 116, 136, 164, 184, 204, 212, 224, 236, 80, 100, 120, 140, 160, 184, 36, 48, 64, 80, 100, 132, 172, 212, 48, 64, 88, 104, 120, 140, 160, 188, 0, 0, 0, 0, 0, 24, 56, 88, 128, 188, 16, 24, 40, 52, 80, 116, 156, 204, 172, 212, 252, 252, 252, 252, 252, 252, 72, 92, 112, 140, 168, 200, 208, 232, 60, 92, 128, 160, 196, 224, 252, 252, 252, 252, 252, 252, 252, 252, 204, 228, 252, 252, 252, 252, 8, 12, 20, 28, 40, 56, 72, 100, 92, 108, 124, 144, 224, 200, 180, 132, 88, 16, 32, 32, 36, 40, 44, 48, 72, 100, 216, 96, 68, 76, 108, 144, 176, 210, 252, 252, 252, 252, 252, 252, 252, 64, 255, 48, 64, 80, 255, 148, 247, 248, 249, 250, 251, 252, 253, 254, 255, 255);
+var g=newArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 168, 184, 200, 216, 232, 252, 60, 76, 96, 116, 140, 160, 184, 208, 44, 60, 76, 92, 120, 148, 176, 204, 100, 116, 80, 104, 132, 160, 188, 220, 132, 4, 16, 32, 56, 84, 104, 132, 156, 188, 208, 232, 252, 40, 60, 88, 116, 136, 156, 180, 24, 44, 68, 96, 120, 156, 184, 212, 248, 252, 4, 20, 28, 44, 56, 72, 92, 108, 128, 148, 52, 64, 80, 96, 112, 132, 148, 168, 64, 68, 88, 104, 124, 148, 176, 204, 52, 72, 96, 116, 136, 164, 192, 220, 24, 28, 80, 52, 64, 84, 108, 128, 40, 52, 68, 84, 96, 112, 128, 148, 168, 188, 28, 40, 56, 76, 100, 136, 40, 52, 64, 80, 100, 132, 172, 212, 48, 44, 64, 76, 88, 104, 136, 168, 24, 36, 52, 72, 96, 120, 144, 168, 196, 224, 64, 80, 96, 112, 140, 172, 204, 240, 52, 52, 52, 100, 144, 184, 216, 244, 20, 44, 68, 100, 136, 176, 184, 208, 0, 0, 0, 0, 0, 0, 0, 80, 108, 136, 164, 192, 220, 252, 136, 144, 156, 176, 196, 216, 24, 36, 52, 68, 92, 120, 152, 172, 156, 176, 200, 224, 244, 236, 220, 188, 152, 16, 32, 68, 72, 76, 80, 84, 100, 132, 244, 128, 96, 24, 44, 72, 108, 146, 60, 84, 104, 124, 148, 172, 196, 0, 0, 48, 64, 80, 255, 148, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255);
+var b=newArray(255, 238, 239, 240, 241, 242, 243, 244, 245, 246, 168, 184, 200, 216, 232, 252, 72, 92, 112, 132, 152, 172, 196, 220, 4, 12, 20, 28, 64, 100, 132, 168, 100, 116, 44, 72, 92, 120, 148, 176, 132, 16, 32, 52, 76, 108, 124, 144, 164, 192, 0, 60, 128, 0, 8, 28, 56, 80, 108, 136, 0, 4, 8, 16, 24, 32, 16, 0, 128, 192, 0, 8, 16, 28, 40, 56, 76, 88, 108, 128, 0, 0, 4, 4, 12, 20, 28, 44, 64, 32, 48, 60, 76, 92, 108, 124, 24, 44, 72, 88, 108, 136, 168, 200, 0, 0, 80, 12, 24, 44, 64, 88, 16, 24, 40, 56, 64, 80, 96, 112, 128, 148, 4, 20, 40, 64, 96, 136, 68, 84, 100, 116, 136, 164, 192, 224, 48, 144, 172, 196, 224, 252, 252, 252, 108, 132, 160, 184, 212, 220, 232, 240, 252, 252, 96, 108, 120, 132, 160, 192, 220, 252, 52, 52, 52, 88, 124, 160, 200, 236, 112, 140, 168, 196, 224, 248, 255, 252, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 4, 0, 48, 100, 152, 88, 104, 124, 140, 164, 188, 216, 224, 52, 64, 76, 92, 252, 248, 236, 216, 172, 16, 32, 112, 116, 120, 124, 128, 144, 168, 252, 164, 140, 8, 24, 52, 84, 126, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 148, 247, 248, 249, 250, 251, 252, 253, 254, 255, 255);
+
+//Minimum and maximum of colour ranges to keep in the final 8bpp image
+var rr1=newArray(198, 80, 70);
+var rr2=newArray(205, 87, 79);
+
+maxd=48;
+
+//Loop through palette and set excluded colours to zero
+for (i=0; i<lengthOf(r); i++) {
+	use=false;
+	for (j=0; j<lengthOf(rr1); j++) {
+		if (i>=rr1[j] && i<=rr2[j]) {
+			use=true;
+		}
+	}
+	if (use==false) {
+		r[i]=0;
+		g[i]=0;
+		b[i]=0;
+	}
+}
 
 //8bpp-ize renders
-//Converts all images in a folder which match a certain naming scheme to 8bpp
+//Recursively converts all images in a folder which match a certain naming scheme to 8bpp
 //The user specifies the target folder. The resulting images are saved to a parallel folder with the same name but appended with "8bpp"
-//Uses a shaded and unshaded render pass to generate the 8bpp image
-//The final pixel values are limited to those which match the hue of the shadeless render
 macro "8bpp-ize Renders [q]" {
-	//Determine the directory to work in
-	fpath=getDirectory("");
-	path=File.getParent(fpath)+"\\";
-	name=File.getName(fpath);
+	path=getDirectory("");
 
-	//Get user input - whether to overwrite and dither level
-	Dialog.create("8bpp-ize Renders");
-	Dialog.addNumber("Dither factor:", 8, 0, 5, "");
-	Dialog.addCheckbox("Overwrite existing 8bpp images", false);
-	Dialog.show();
-	dither=Dialog.getNumber();
-	overwrite=Dialog.getCheckbox();
+	recursiveModify(path);
+}
 
-	//If the target output directory does not exist then create it
-	if (File.exists(path+name+"8bpp\\")==false) {
-		File.makeDirectory(path+name+"8bpp\\");
-	}
-
-	setBatchMode(true);
-	//Repeat for all tile widths
-	for (i=0; i<lengthOf(tilew); i++) {
-		j=1;
-		str=padString(j);
-		//While the files exist loop through files named <tilewidth>_XXXXX.png and convert
-		while (File.exists(path+name+"\\"+tilew[i]+"_"+str+".png")==true) {
-			showStatus(j);
-			//Check if output file exists or if overwriting is enabled
-			if (File.exists(path+name+"8bpp\\"+tilew[i]+"_"+str+".png")==false || overwrite==true) {
-				//Open and resize the shadeless image
-				open(path+name+"\\"+tilew[lengthOf(tilew)-1]+"m_"+str+".png");
-				ar=getHeight()/getWidth();
-				run("Size...", "width="+tilew[i]+" height="+tilew[i]*ar+" interpolation=None");
-				run("Select All");
-				run("Copy");
-				close();
-				//Open the shaded image
-				open(path+name+"\\"+tilew[i]+"_"+str+".png");
-				run("Add Slice");
-				run("Paste");
-				//Call the convert to 8bpp function
-				convertTo8Bit(dither);
-				setSlice(1);
-				//Save output
-				if (overwrite==true || File.exists(path+name+"8bpp\\"+tilew[i]+"_"+str+".png")==false) {
-					saveAs("PNG", path+name+"8bpp\\"+tilew[i]+"_"+str+".png");
+//The actual recursive modify function
+function recursiveModify(path) {
+	files=getFileList(path);
+	for (i=0; i<lengthOf(files); i++) {
+		if (File.isDirectory(""+path+files[i])==true) {
+			recursiveModify(""+path+files[i]);
+		} else if (startsWith(files[i], "64m")==true || startsWith(files[i], "256m")==true || startsWith(files[i], "128m")==true) {
+			open(""+path+files[i]);
+			if (bitDepth()!=8) {
+				convertTo8Bit();
+				//Replace accepted colour ranges to minimum brightness shade
+				for (j=0; j<lengthOf(rr1); j++) {
+					changeValues(rr1[j], rr2[j], rr1[j]);
 				}
-				close();
+				res=getImageID();
+				wr=getWidth();
+				hr=getHeight();
+				//Save images if it differs from the existing image or there is no pre-existing image
+				if (File.exists(""+path+"8bpp\\")==false) {
+					File.makeDirectory(""+path+"8bpp\\");
+				} else {
+					if (File.exists(""+path+"8bpp\\"+files[i])==true) {
+						open(""+path+"8bpp\\"+files[i]);
+						old=getImageID();
+						wo=getWidth();
+						ho=getHeight();
+						if (wo==wr && hr==ho) {
+							selectImage(res);
+							run("Select All");
+							run("Copy");
+							setPasteMode("Difference");
+							selectImage(old);
+							run("Select All");
+							run("Paste");
+							getRawStatistics(area, mean, min, max);
+							close();
+							selectImage(res);
+							if (max!=0) {
+								saveAs("PNG", ""+path+"8bpp\\"+files[i]);
+							}
+						} else {
+							saveAs("PNG", ""+path+"8bpp\\"+files[i]);					
+						}
+					} else {
+						saveAs("PNG", ""+path+"8bpp\\"+files[i]);					
+					}
+				}
 			}
-			//Prepare for next image
-			j++;
-			str=padString(j);
+			close();
 		}
 	}
 }
 
-//Padding function to increase string length to match the blender output naming scheme
-function padString(str) {
-	str=""+str;
-	while (lengthOf(str)<indexleng) {
-		str="0"+str;
-	}
-	return str;
-}
-
 //Function for 8bpp conversion
-function convertTo8Bit(dither) {
+function convertTo8Bit() {
 	//Loop over all pixels
 	w=getWidth();
 	h=getHeight();
 	for (x=0; x<w; x++) {
 		showProgress(x/w);
 		for (y=0; y<h; y++) {
-			//Check the shadeless image and determine the colour hue
-			setSlice(2);
 			v=getPixel(x, y);
 			rp=(v>>16)&0xff;
 			gp=(v>>8)&0xff;
 			bp=(v>>0)&0xff;
-			if (rp==0 && gp==0 && bp==0) {
-				//If the shadeless image is pure black then set it to transparent
-				index=0;
-			} else {
-				//Else search for the nearest hue
-				d=256*256;
-				index=0;
-				min=10;
-				max=10+18*12;
-				for (i=min; i<max; i++) {
+
+			index=0;
+			//Select index nearest to the current pixel
+			d=256*256;
+			if (rp!=255 || gp!=255 || bp!=255) {
+				for (i=0; i<255; i++) {
 					di=pow(pow(rp-r[i], 2)+pow(gp-g[i], 2)+pow(bp-b[i], 2), 0.5);
 					if (di<d) {
 						d=di;
 						index=i;
 					}
 				}
-				huelimit=floor((index-10)/12);
-				//Using the hue limit determine the 8bpp palette entry for the shaded image
-				setSlice(1);
-				v=getPixel(x, y);
-				rp=(v>>16)&0xff;
-				gp=(v>>8)&0xff;
-				bp=(v>>0)&0xff;
-				if (rp==0 && gp==0 && bp==0) {
-					//If the shaded image is pure black then set it to transparent
-					index=0;
-				} else {
-					//else search for the nearest match
-					rp+=floor((random()-0.5)*dither);
-					gp+=floor((random()-0.5)*dither);
-					bp+=floor((random()-0.5)*dither);
-					d=256*256;
-					index=0;
-					min=huelimit*12+10;
-					max=min+12;
-					for (i=min; i<max; i++) {
-						di=pow(pow(rp-r[i], 2)+pow(gp-g[i], 2)+pow(bp-b[i], 2), 0.5);
-						if (di<d) {
-							d=di;
-							index=i;
-						}
-					}
-				}
 			}
 			//Set the new pixel value
+			if (d>maxd) {
+				index=0;
+			}
 			vn=(index&0xff)<<16+(index&0xff)<<8+(index&0xff)<<0;
-			setSlice(1);
 			setPixel(x, y, vn);
 		}
 	}

@@ -1,0 +1,4 @@
+These are some scripts to help with automatic pixel tweaking of graphics.
+
+They are written in the ImageJ macro language: http://rsbweb.nih.gov/ij/
+ImageJ is Java-based FOSS designed for scientific image analysis.
