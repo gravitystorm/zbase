@@ -1,0 +1,22 @@
+# Blender MTL File: 'wrapping_res2.blend'
+# Material Count: 2
+newmtl Toyland_BuildingWrap
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.124741 0.289045 0.510078
+Ks 0.200000 0.200000 0.200000
+Ni 1.000000
+d 1.000000
+illum 2
+
+
+newmtl Toyland_Red
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.800000 0.019336 0.000000
+Ks 0.300000 0.300000 0.300000
+Ni 1.000000
+d 1.000000
+illum 2
+
+
