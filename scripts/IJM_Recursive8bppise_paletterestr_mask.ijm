@@ -92,7 +92,7 @@ function recursiveModify(path) {
 				opened=true;
 			}
 			//Check that the conversion has worked correctly; i.e. an 8bpp image is currently open
-			if (bitDepth()==8 && opened==true) {
+			if (bitDepth()==8 && opened==true;) {
 				//Replace accepted colour ranges to minimum brightness shade
 				for (j=0; j<lengthOf(rr1); j++) {
 					changeValues(rr1[j], rr2[j], rr1[j]);
