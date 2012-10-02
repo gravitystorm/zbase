@@ -62,9 +62,11 @@ function recursiveModify(path) {
 		}
 	}
 
+	//Setup expected tile sizes (file name prefixes)
 	tilews=newArray("64", "128", "256");
 
 	for (i=0; i<lengthOf(files); i++) {
+		//For each file check which tilesize it is, based on the format [tilesize]_####.png
 		valid=-1;
 		for (j=0; j<lengthOf(tilews); j++) {
 			if (startsWith(files[i], ""+tilews[j]+"_")==true) {
@@ -72,19 +74,25 @@ function recursiveModify(path) {
 			}
 		}
 		if (File.isDirectory(""+path+files[i])==true) {
+			//If the file is a directory recursively process its contents
 			recursiveModify(""+path+files[i]);
 		} else if (valid!=-1) {
+			//Otherwise construct the mask file names, on the format [tilesize]m[version]_####.png
 			m1=tilews[valid]+"m_"+substring(files[i], lengthOf(tilews[valid]+1), lengthOf(files[i]));
 			m2=tilews[valid]+"m2_"+substring(files[i], lengthOf(tilews[valid]+1), lengthOf(files[i]));
 			opened=false;
+			//Open on a highest version priority and process to an 8bpp mask
 			if (File.exists(path+m2)==true) {
 				open(""+path+m2);
 				convertTo8Bit2();
+				opened=true;
 			} else if (File.exists(path+m1)==true) {
 				open(""+path+m1);
 				convertTo8Bit();
+				opened=true;
 			}
-			if (bitDepth()==8) {
+			//Check that the conversion has worked correctly; i.e. an 8bpp image is currently open
+			if (bitDepth()==8 && opened==true;) {
 				//Replace accepted colour ranges to minimum brightness shade
 				for (j=0; j<lengthOf(rr1); j++) {
 					changeValues(rr1[j], rr2[j], rr1[j]);
