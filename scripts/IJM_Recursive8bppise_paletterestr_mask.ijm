@@ -62,17 +62,29 @@ function recursiveModify(path) {
 		}
 	}
 
+	tilews=newArray("64", "128", "256");
+
 	for (i=0; i<lengthOf(files); i++) {
+		valid=-1;
+		for (j=0; j<lengthOf(tilews); j++) {
+			if (startsWith(files[i], ""+tilews[j]+"_")==true) {
+				valid=j;
+			}
+		}
 		if (File.isDirectory(""+path+files[i])==true) {
 			recursiveModify(""+path+files[i]);
-		} else if (startsWith(files[i], "64m")==true || startsWith(files[i], "256m")==true || startsWith(files[i], "128m")==true) {
-			open(""+path+files[i]);
-			if (bitDepth()!=8) {
-				if (startsWith(files[i], "64m2")==true || startsWith(files[i], "256m2")==true || startsWith(files[i], "128m2")==true) {
-					convertTo8Bit2();
-				} else {
-					convertTo8Bit();
-				}
+		} else if (valid!=-1) {
+			m1=tilews[valid]+"m_"+substring(files[i], lengthOf(tilews[valid]+1), lengthOf(files[i]));
+			m2=tilews[valid]+"m2_"+substring(files[i], lengthOf(tilews[valid]+1), lengthOf(files[i]));
+			opened=false;
+			if (File.exists(path+m2)==true) {
+				open(""+path+m2);
+				convertTo8Bit2();
+			} else if (File.exists(path+m1)==true) {
+				open(""+path+m1);
+				convertTo8Bit();
+			}
+			if (bitDepth()==8) {
 				//Replace accepted colour ranges to minimum brightness shade
 				for (j=0; j<lengthOf(rr1); j++) {
 					changeValues(rr1[j], rr2[j], rr1[j]);
@@ -101,13 +113,13 @@ function recursiveModify(path) {
 							close();
 							selectImage(res);
 							if (max!=0) {
-								saveAs("PNG", ""+path+"8bpp"+File.separator+files[i]);
+								saveAs("PNG", ""+path+"8bpp"+File.separator+m1);
 							}
 						} else {
-							saveAs("PNG", ""+path+"8bpp"+File.separator+files[i]);					
+							saveAs("PNG", ""+path+"8bpp"+File.separator+m1);					
 						}
 					} else {
-						saveAs("PNG", ""+path+"8bpp"+File.separator+files[i]);					
+						saveAs("PNG", ""+path+"8bpp"+File.separator+m1);					
 					}
 				}
 			}
