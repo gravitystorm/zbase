@@ -1,0 +1,64 @@
+path=getDirectory("");
+var count=0;
+recursiveCount(path);
+print(count);
+
+function recursiveCount(path) {
+	files=getFileList(path);
+	for (i=0; i<lengthOf(files); i++) {
+		if (File.isDirectory(path+files[i])==true) {
+			recursiveCount(""+path+files[i]);
+		} else {
+			if (startsWith(files[i], "256_")==true && endsWith(files[i], ".png")) {
+				count++;
+			}
+		}
+	}
+}
+
+var lw=floor(pow(count, 0.5));
+var lh=floor(pow(count, 0.5));
+var layout=newArray(lw*lh);
+var bw=256;
+var tiw=bw;
+var tih=bw*2;
+newImage("SpriteMap", "RGB White", lw*tiw, lh*tih, 1);
+var tgt=0;
+getId1();
+var count2=0;
+recursiveDraw(path);
+
+function getId1() {
+	tgt=getImageID();
+}
+
+function recursiveDraw(path) {
+	files=getFileList(path);
+	for (i=0; i<lengthOf(files); i++) {
+		if (File.isDirectory(path+files[i])==true) {
+			recursiveDraw(""+path+files[i]);
+		} else {
+			if (startsWith(files[i], ""+bw+"_")==true && endsWith(files[i], ".png")) {
+				occupied=1;
+				while(occupied==1 && count2<lw*lh) {
+					cx=floor(random()*lw);
+					cy=floor(random()*lh);
+					occupied=layout[cx+cy*lw];
+				}
+				count2++;
+				layout[cx+cy*lw]=1;
+				open(path+files[i]);
+				id=getImageID();
+				cw=getWidth();
+				ch=getHeight();
+				run("Select All");
+				run("Copy");
+				selectImage(id);
+				close();
+				selectImage(tgt);
+				makeRectangle(cx*tiw+(tiw-cw)/2, cy*tih+(tih-ch)/2, cw, ch);
+				run("Paste");				
+			}
+		}
+	}
+}
