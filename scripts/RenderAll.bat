@@ -249,9 +249,9 @@
 "C:\Program Files\Blender Foundation\Blender\blender.exe" -b "M:\zbase\zbase\landscape/trees/tropic/palm/road_tree.blend" -a
 "C:\Program Files\Blender Foundation\Blender\blender.exe" -b "M:\zbase\zbase\landscape/trees/tropic/palm/rubber_plantation.blend" -a
 "C:\Program Files\Blender Foundation\Blender\blender.exe" -b "M:\zbase\zbase\materials/materials_bridge_recolour.blend" -a
-"C:\Program Files\Blender Foundation\Blender\blender.exe" -b "M:\zbase\zbase\materials/materials_bridge_recolour_128.blend" -a
+"C:\Program Files\Blender Foundation\Blender\blender.exe" -b "M:\zbase\zbase\materials/materials_bridge_recolour_64.blend" -a
 "C:\Program Files\Blender Foundation\Blender\blender.exe" -b "M:\zbase\zbase\materials/materials_company_colour.blend" -a
-"C:\Program Files\Blender Foundation\Blender\blender.exe" -b "M:\zbase\zbase\materials/materials_company_colour_128.blend" -a
+"C:\Program Files\Blender Foundation\Blender\blender.exe" -b "M:\zbase\zbase\materials/materials_company_colour_64.blend" -a
 "C:\Program Files\Blender Foundation\Blender\blender.exe" -b "M:\zbase\zbase\materials/materials_general.blend" -a
 "C:\Program Files\Blender Foundation\Blender\blender.exe" -b "M:\zbase\zbase\materials/materials_general_old.blend" -a
 "C:\Program Files\Blender Foundation\Blender\blender.exe" -b "M:\zbase\zbase\materials/materials_general_wip.blend" -a

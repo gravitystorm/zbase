@@ -24,7 +24,7 @@ function recursiveModify(path) {
 	files=getFileList(path);
 
 	//Work out which colour to use in the 8bpp image
-	if (File.exists(path+"recolours.txt")==true) {
+	if (File.exists(path+"recolours128.txt")==true) {
 		//load and parse recolour information
 		tvals=split(File.openAsString(path+"recolours128.txt"), ",");
 		tr0=parseInt(tvals[1]);
@@ -52,15 +52,17 @@ function recursiveModify(path) {
 			m1=tilews[valid]+"m_"+substring(files[i], lengthOf(tilews[valid]+1), lengthOf(files[i]));
 			m2=tilews[valid]+"m2_"+substring(files[i], lengthOf(tilews[valid]+1), lengthOf(files[i]));
 			//Open the m2 mask and process to an 8bpp mask
-			open(""+path+m2);
-			convertTo8Bit2();
-
-			//Save image, making directory if needed
-			if (File.exists(""+path+"8bpp"+File.separator)==false) {
-				File.makeDirectory(""+path+"8bpp"+File.separator);
+			if (File.exists(""+path+m2)==true) {
+				open(""+path+m2);
+				convertTo8Bit2();
+	
+				//Save image, making directory if needed
+				if (File.exists(""+path+"8bpp"+File.separator)==false) {
+					File.makeDirectory(""+path+"8bpp"+File.separator);
+				}
+				saveAs("PNG", ""+path+"8bpp"+File.separator+m1);					
+				close();
 			}
-			saveAs("PNG", ""+path+"8bpp"+File.separator+m1);					
-			close();
 		}
 	}
 }
