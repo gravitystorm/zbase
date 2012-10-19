@@ -1,0 +1,13 @@
+path=getDirectory("");
+printBat(path);
+
+function printBat(path) {
+	files=getFileList(path);
+	for (f=0; f<lengthOf(files); f++) {
+		if (File.isDirectory(path+files[f])==true) {
+			printBat(""+path+files[f]);
+		} else if (endsWith(files[f], ".blend")==true) {
+			print("\"C:\\Program Files\\Blender Foundation\\Blender\\blender.exe\" -b \""+path+files[f]+"\" -a");
+		}
+	}
+}
