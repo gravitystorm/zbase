@@ -1,0 +1,1 @@
+"C:\Program Files\Blender Foundation\Blender\blender.exe" -b "M:\zbase\zbase\terrain/terrain_tropic.blend" -s 0 -e 1 -a

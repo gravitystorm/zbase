@@ -7,7 +7,7 @@ function printBat(path) {
 		if (File.isDirectory(path+files[f])==true) {
 			printBat(""+path+files[f]);
 		} else if (endsWith(files[f], ".blend")==true) {
-			print("\"C:\\Program Files\\Blender Foundation\\Blender\\blender.exe\" -b \""+path+files[f]+"\" -a");
+			print("\"C:\\Program Files\\Blender Foundation\\Blender\\blender.exe\" -b \""+path+files[f]+"\" -s 0 -a");
 		}
 	}
 }
