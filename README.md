@@ -4,6 +4,8 @@ This is a modified version of the zbase graphics pack for OpenTTD. This is
 just a learning exercise for me in Blender and OpenTTD grfs, so it's 99.99% original
 zbase and just a few tweaks to suit my own tastes.
 
+![screenshot](https://raw.githubusercontent.com/gravitystorm/zbase/master/preview.png)
+
 # zbase
 
 The upstream zbase project is at http://dev.openttdcoop.org/projects/zbase/ and
